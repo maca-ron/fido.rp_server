@@ -34,30 +34,48 @@ class Request
      **/
     public function call($url, array $headers, array $params = array(), $method = 'post', $sslVerify = false, $timeout = 30)
     {
-        $curl = Request::forge($url, 'curl');
+        try {
+            $curl = Request::forge($url, 'curl');
 
-        // リクエストヘッダー
-        foreach ($headers as $key => $value) {
-            $curl->set_header($key, $value);
+            // リクエストヘッダー
+            foreach ($headers as $key => $value) {
+                $curl->set_header($key, $value);
+            }
+
+            // パラメータ
+            $curl->set_params($params);
+
+            // メソッド
+            $curl->set_method($method);
+
+            // オプション
+            $curl->set_options(array(
+                'TIMEOUT'         => $timeout,
+                'SSL_VERIFYPEER'  => $sslVerify,
+            ));
+
+            $curl->set_mime_type('json');
+            $curl->set_auto_format(false);
+    
+            Log::info($url . 'is requested.');
+            Log::info('Request begin ' . $url);
+            Log::debug('Request url: ' . $url);
+            Log::debug('Request headers: ' . print_r($headers,true));
+            Log::debug('Request params: ' . print_r($params,true));
+            Log::debug('Request method: ' . $method);
+
+            $start = microtime(true);
+
+            $request = $curl->execute();
+
+            $end = microtime(true);
+            $time = $end - $start;
+
+            Log::info('Request end ' . $url . ' , time:' . $time);
+        } catch (\Exception $e) {
+            Log::debug('Exception $e: ' . print_r($e,true));
+            Log::error('An exception occurred.', 'Request::call()');
         }
-
-        // パラメータ
-        $curl->set_params($params);
-
-        // メソッド
-        $curl->set_method($method);
-
-        // オプション
-        $curl->set_options(array(
-            'TIMEOUT'         => $timeout,
-            'SSL_VERIFYPEER'  => $sslVerify,
-        ));
-
-        $curl->set_mime_type('json');
-        $curl->set_auto_format(false);
-
-        $request = $curl->execute();
-
         return $request;
     }
 }

@@ -1,8 +1,8 @@
 <?php
 namespace Controller;
 
-use Controller\AbstractController;
-use Util\Interface;
+use Controller;
+use Util\Request;
 
 /**
  * 登録開始コントローラークラス
@@ -14,7 +14,6 @@ use Util\Interface;
  */
 class RegistrationInitiate extends AbstractController
 {
-
     /**
      * デフォルトアクションメソッド
      *
@@ -29,7 +28,8 @@ class RegistrationInitiate extends AbstractController
         $response = Magatama::connect(
             '/fidoap/registration/initiate',
             $headers,
-            $params
+            $params,
+            true
         );
 
         return $response;
