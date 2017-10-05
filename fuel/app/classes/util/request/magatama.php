@@ -1,8 +1,8 @@
 <?php 
 /**
- * fuel/app/classes/util/interface/magatama.php
+ * fuel/app/classes/util/request/magatama.php
  *
- * \Util\Interface\Magatamaクラスの定義
+ * \Util\Request\Magatamaクラスの定義
  *
  * @since 2017-09-21
  * @copyright  (c) 2017 DMM.com Labo Co.,Ltd All Rights Reserved.
@@ -14,7 +14,7 @@ use Util;
 /**
  * 勾玉サーバーリクエスト送信用ユーティリティクラス
  * 
- * @package Util\Interface
+ * @package Util\Request
  * @author takae-miyazaki
  * @since 2017-09-21
  * @copyright (c) 2017 DMM.com Labo Co.,Ltd All Rights Reserved.
@@ -39,19 +39,18 @@ class Magatama
      * @param bool $additionalHeader 事業者コード・認証キーの付与有無 (default=false)
      * @return object レスポンスオブジェクト
      **/
-    public function connect($url, array $headers, array $params = array(), $additionalHeader = false)
+    public static function connect($url, array $headers, array $params = array(), $additionalHeader = false)
     {
         if ($additionalHeader === true) {
             $headers['X_FIDOAP_OP_CODE'] = self::MAGATAMA_OP_CODE;
             $headers['X_FIDOAP_AUTH_KEY'] = self::MAGATAMA_AUTH_KEY;
         }
 
-        $request = Request::call(
+        $request = Util\Request::call(
             self::MAGATAMA_SERVER_FQDN . $url,
             $headers,
             $params,
-            'post',
-            $sslVerify
+            'post'
         );
 
         return $request->response();

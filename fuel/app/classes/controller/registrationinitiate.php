@@ -25,7 +25,7 @@ class RegistrationInitiate extends AbstractController
         $headers = \Input::headers();
         $params  = \Input::param();
 
-        $response = Magatama::connect(
+        $response = Request\Magatama::connect(
             '/fidoap/registration/initiate',
             $headers,
             $params,

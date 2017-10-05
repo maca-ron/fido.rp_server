@@ -9,7 +9,7 @@
  */
 namespace Util;
 
-use Fuel\Core\Request;
+use Fuel\Core;
 
 /**
  * リクエスト送信用ユーティリティクラス
@@ -32,10 +32,10 @@ class Request
      * @param integer $timeout リクエストタイムアウト値 (default=30)
      * @return object リクエストオブジェクト
      **/
-    public function call($url, array $headers, array $params = array(), $method = 'post', $sslVerify = false, $timeout = 30)
+    public static function call($url, array $headers, array $params = array(), $method = 'post', $sslVerify = false, $timeout = 30)
     {
         try {
-            $curl = Request::forge($url, 'curl');
+            $curl = Core\Request::forge($url, 'curl');
 
             // リクエストヘッダー
             foreach ($headers as $key => $value) {
@@ -57,12 +57,12 @@ class Request
             $curl->set_mime_type('json');
             $curl->set_auto_format(false);
     
-            Log::info($url . 'is requested.');
-            Log::info('Request begin ' . $url);
-            Log::debug('Request url: ' . $url);
-            Log::debug('Request headers: ' . print_r($headers,true));
-            Log::debug('Request params: ' . print_r($params,true));
-            Log::debug('Request method: ' . $method);
+            \Log::info($url . 'is requested.');
+            \Log::info('Request begin ' . $url);
+            \Log::debug('Request url: ' . $url);
+            \Log::debug('Request headers: ' . print_r($headers,true));
+            \Log::debug('Request params: ' . print_r($params,true));
+            \Log::debug('Request method: ' . $method);
 
             $start = microtime(true);
 
@@ -71,10 +71,12 @@ class Request
             $end = microtime(true);
             $time = $end - $start;
 
-            Log::info('Request end ' . $url . ' , time:' . $time);
+            \Log::info('Request end ' . $url . ' , time:' . $time);
+
+            return $request;
         } catch (\Exception $e) {
-            Log::debug('Exception $e: ' . print_r($e,true));
-            Log::error('An exception occurred.', 'Request::call()');
+            \Log::debug('Exception $e: ' . print_r($e,true));
+            \Log::error('An exception occurred.', 'Request::call()');
         }
         return $request;
     }
