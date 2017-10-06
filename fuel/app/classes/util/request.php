@@ -54,7 +54,6 @@ class Request
                 'SSL_VERIFYPEER'  => $sslVerify,
             ));
 
-            $curl->set_mime_type('json');
             $curl->set_auto_format(false);
     
             \Log::info($url . 'is requested.');
