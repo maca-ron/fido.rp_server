@@ -27,12 +27,12 @@ class Request
      * @param string $url 送信ＵＲＬ
      * @param array $headers リクエストヘッダー
      * @param array $params リクエストパラメータ
-     * @param string $method リクエストHTTPメソッド (default='post')
+     * @param string $method リクエストHTTPメソッド (default='POST')
      * @param bool $sslVerify SSL証明書検証有無 (default=false)
      * @param integer $timeout リクエストタイムアウト値 (default=30)
      * @return object リクエストオブジェクト
      **/
-    public static function call($url, array $headers, array $params = array(), $method = 'post', $sslVerify = false, $timeout = 30)
+    public static function call($url, array $headers, array $params = array(), $method = 'POST', $sslVerify = false, $timeout = 30)
     {
         try {
             $curl = Core\Request::forge($url, 'curl');

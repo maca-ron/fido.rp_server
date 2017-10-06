@@ -50,7 +50,7 @@ class Magatama
             self::MAGATAMA_SERVER_FQDN . $url,
             $headers,
             $params,
-            'post'
+            'POST'
         );
 
         return $request->response();
