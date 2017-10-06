@@ -29,7 +29,7 @@ class Authentication extends AbstractController
             '/fidoap/authentication/response',
             $headers,
             $params,
-            true
+            false
         );
 
         return $response;

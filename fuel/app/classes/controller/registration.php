@@ -29,7 +29,7 @@ class Registration extends AbstractController
             '/fidoap/registration/response',
             $headers,
             $params,
-            true
+            false
         );
 
         return $response;
