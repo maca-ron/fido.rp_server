@@ -25,7 +25,7 @@ class GetFacetIds extends AbstractController
         $headers = \Input::headers();
         $params  = \Input::param();
 
-        $facetIds = Dao\FacetIds::findFacetIds(\Input::param('app_id'));
+        $facetIds = Dao\FacetIds::findFacetIds($params['app_id']);
 
         return $this->response(array(
             'trustedFacets' => array(

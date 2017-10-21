@@ -32,6 +32,9 @@ class Registration extends AbstractController
             false
         );
 
-        return $response;
+        foreach ($response->headers as $headerKey => $headerValue) {
+            $this->response->set_header($headerKey, $headerValue);
+        }
+        return $response->body();
     }
 }
